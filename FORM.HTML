@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+    .container {
+      width: 400px;
+      margin: 60px auto;
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Registration Form</h2>
+    <form name="regForm" onsubmit="return validateForm()">
+      <label>First Name:</label>
+      <input type="text" id="fname" placeholder="Enter First Name">
+      <span id="fnameError" class="error"></span>
+
+      <label>Last Name:</label>
+      <input type="text" id="lname" placeholder="Enter Last Name">
+      <span id="lnameError" class="error"></span>
+
+      <label>Password:</label>
+      <input type="password" id="password" placeholder="Enter Password">
+      <span id="passwordError" class="error"></span>
+
+      <label>Email ID:</label>
+      <input type="text" id="email" placeholder="Enter Email">
+      <span id="emailError" class="error"></span>
+
+      <label>Mobile Number:</label>
+      <input type="text" id="mobile" placeholder="Enter 10-digit Mobile Number">
+      <span id="mobileError" class="error"></span>
+
+      <label>Address:</label>
+      <textarea id="address" placeholder="Enter Address"></textarea>
+      <span id="addressError" class="error"></span>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    function validateForm() {
+      // Get form values
+      var fname = document.getElementById("fname").value.trim();
+      var lname = document.getElementById("lname").value.trim();
+      var password = document.getElementById("password").value.trim();
+      var email = document.getElementById("email").value.trim();
+      var mobile = document.getElementById("mobile").value.trim();
+      var address = document.getElementById("address").value.trim();
+
+      // Error element references
+      var fnameErr = document.getElementById("fnameError");
+      var lnameErr = document.getElementById("lnameError");
+      var passErr = document.getElementById("passwordError");
+      var emailErr = document.getElementById("emailError");
+      var mobErr = document.getElementById("mobileError");
+      var addrErr = document.getElementById("addressError");
+
+      // Reset previous errors
+      fnameErr.innerHTML = lnameErr.innerHTML = passErr.innerHTML = emailErr.innerHTML = mobErr.innerHTML = addrErr.innerHTML = "";
+
+      // Validation flags
+      let valid = true;
+
+      // First Name Validation
+      if (!/^[A-Za-z]+$/.test(fname) || fname.length < 6) {
+        fnameErr.innerHTML = "Name must contain alphabets & be at least 6 letters long";
+        valid = false;
+      }
+
+      // Last Name Validation
+      if (lname === "") {
+        lnameErr.innerHTML = "Last name cannot be empty";
+        valid = false;
+      }
+
+      // Password Validation
+      if (password.length < 6) {
+        passErr.innerHTML = "Password must be at least 6 characters long";
+        valid = false;
+      }
+
+      // Email Validation
+      var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailPattern.test(email)) {
+        emailErr.innerHTML = "Invalid email format (use name@domain.com)";
+        valid = false;
+      }
+
+      // Mobile Validation
+      if (!/^[0-9]{10}$/.test(mobile)) {
+        mobErr.innerHTML = "Mobile number must contain exactly 10 digits";
+        valid = false;
+      }
+
+      // Address Validation
+      if (address === "") {
+        addrErr.innerHTML = "Address cannot be empty";
+        valid = false;
+      }
+
+      if (valid) {
+        alert("Registration Successful!");
+      }
+      return valid;
+    }
+  </script>
+
+</body>
+</html>
